@@ -1,4 +1,4 @@
-interface vNode {
+export interface vNode {
   tag: string,
   props: any ,
   children: any,
@@ -11,7 +11,7 @@ type mountFn = (n: vNode, container: Element)=> void
 
 type patchFn = (n1: vNode, n2: vNode)=> void
 
-const h: hFn = (tag, props,children, el = null) => {
+export const h: hFn = (tag, props,children, el = null) => {
   return {
     tag,
     props,
@@ -20,7 +20,7 @@ const h: hFn = (tag, props,children, el = null) => {
   }
 }
 
-const mount: mountFn = (n, container)=> {
+export const mount: mountFn = (n, container)=> {
   //根据虚拟node，创建出真实的元素
   const el = n.el = document.createElement(n.tag)
   //添加props
@@ -39,12 +39,11 @@ const mount: mountFn = (n, container)=> {
     if (typeof n.children === 'string') {
       el.textContent = n.children
     } else {
-      n.children.array.forEach(element => {
+      n.children.forEach(element => {
         mount(element, el)
       });
     }
   }
   //挂载el
   container.appendChild(el)
-
 }
