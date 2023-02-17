@@ -66,12 +66,13 @@ const patchProps = (n1, n2 , el)=> {
   }
 
   for (const key in oldProps) {
-    if (!(key in newProps)) {
+    
       const oldValue = oldProps[key]
       if (key.startsWith('on')) {
         el.removeEventListener(key.slice(2).toLowerCase(),oldValue)
       } else {
-        el.removeAttrebute(key)
+        if (!(key in newProps)) {
+          el.removeAttrebute(key) 
       }
     }
   }
